@@ -12,6 +12,7 @@ public interface UserMapper {
     UserInfoGetRes selProfileUserInfo(UserInfoGetReq p);
     int updProfilePic(UserProfilePatchReq p);
 
-    List<User> selTest(long userId);//한 개의 값을 보낼 때 변수명 중요 X
+    List<User> users(long userId);
+
 
 }

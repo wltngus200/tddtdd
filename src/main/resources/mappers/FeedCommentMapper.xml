@@ -27,11 +27,5 @@
         LIMIT 4
     </select>
 
-    <select id="feedAllComment">
-        SELECT feed_comment_id AS feedCommentId, comment,
-                user_id AS writerId, created_at AS createdAt
-        FROM feed_comment
-        ORDER BY created_at
-    </select>
 
 </mapper>

@@ -13,5 +13,4 @@ public interface FeedCommentMapper {
     int deleteFeedComment(FeedCommentDeleteReq p);
 
     List<FeedCommentGetRes> feedCommentList(long feedId);
-    List<FeedCommentGetRes> feedAllComment();
 }

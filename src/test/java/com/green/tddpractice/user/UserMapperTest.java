@@ -1,37 +1,41 @@
-package com.green.tddpractice.feedcomment;
+package com.green.tddpractice.user;
 
-import com.green.tddpractice.feedcomment.model.FeedCommentGetRes;
-import com.green.tddpractice.feedcomment.model.FeedCommentPostReq;
+import com.green.tddpractice.user.model.User;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.sql.DatabaseMetaData;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-
-
 @MybatisTest
+@ActiveProfiles
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class FeedCommentMapperTest {
+class UserMapperTest {
     @Autowired
-    private FeedCommentMapper mapper;
+    private UserMapper mapper;
 
     @Test
-    void insFeedComment() {
+    void postUser() {
+        User user=mapper.getUserId("aa123");
+        List<User> u1=mapper.users(1);
+        assertEquals(1, u1.size());
+        assertEquals(u1,user);
 
     }
 
     @Test
-    void deleteFeedComment() {
+    void getUserId() {
     }
 
     @Test
-    void feedCommentList() {
+    void selProfileUserInfo() {
+    }
+
+    @Test
+    void updProfilePic() {
     }
 }
