@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.greengram.feed.FeedMapper">
+    <insert id="postFeed" keyProperty="feedId" useGeneratedKeys="true">
+        INSERT INTO feed
+        (writer_id, contents, location)
+        VALUES
+        (#{userId}, #{contents}, #{location})
+    </insert>
+
+    <insert id="postFeedPics">
+        INSERT INTO feed_pics
+        (feed_id, pic)
+        VALUES
+        <foreach item="pic" collection="fileNames" separator="," >
+        (#{feedId}, #{pic})
+        </foreach>
+    </insert>
+
+    <select id="getFeed">
+        SELECT A.feed_id AS feedId, A.writer_id AS writerId, A.created_at AS createdAt,
+                A.contents, A.location, B.nm AS writerNm, B.pic AS writerPic, IF(C.feed_id IS NULL, 0, 1) AS isFav
+        FROM feed A
+        INNER JOIN user B
+        ON A.writer_id=B.user_id
+        LEFT JOIN feed_favorite C
+        ON #{signedUserId}=C.user_id AND A.feed_id=C.feed_id
+        <if test="profileUserId!=null and profileUserId>0">
+            WHERE A.writer_id=#{profileUserId}
+        </if>
+        ORDER BY A.created_at DESC
+        LIMIT #{startNum}, #{size}
+    </select>
+
+    <select id="getFeedPicsByFeedId">
+        SELECT pic
+        FROM feed_pics
+        WHERE feed_id=#{feed_id}
+    </select>
+
+
+    <delete id="deleteFeed">
+        DELETE feed
+        WHERE feed_id =#{feedId}
+    </delete>
+
+    <delete id="deleteFeedPics">
+        DELETE feed_pics
+        WHERE feed_id=#{feedId}
+    </delete>
+</mapper>

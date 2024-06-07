@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.greengram.userfollow.UserFollowMapper">
+    <insert id="insUserFollow">
+        INSERT INTO user_follow
+        SET from_user_id=#{fromUserId},
+            to_user_id=#{toUserId}
+    </insert>
+
+    <delete id="delUserFollow">
+        DELETE
+        FROM user_follow
+        WHERE from_user_id=#{fromUserId}
+         AND to_user_id=#{toUserId}
+    </delete>
+
+    <!--프로필 주인의 이름, 사진, 가입일시, 피드수, 좋아요수, 팔로잉 수, 팔로워수-->
+    <!--팔로우 상태 둘 다 X 0, 둘 중 한 명 X(나만 1, 상대만 2), 둘 다 O 3-->
+    <select id="">
+        SELECT
+        FROM user_follow A
+        INNER JOIN user B
+    </select>
+
+    <select id="selUserFollowListForTest">
+        SELECT from_user_id AS fromUserId, to_user_id AS toUserId, created_at AS createdAt
+        FROM user_follow
+        <where><!--SQL WHERE로 쓰면 두 값 모두 0이 넘어갈 때, toUserId가 0일 때 에러-->
+            <if test="fromUserId > 0">
+                from_user_id=#{fromUserId}
+            </if>
+            <if test="toUserId > 0">
+                AND to_user_id=#{toUserId}
+            </if>
+        </where>
+        ORDER BY from_user_id, to_user_id <!--PK가 복합키이기 때문-->
+    </select>
+    <!--다이나믹 SQL문(동적 쿼리) : 상황에 따라 SQL문이 변경이 되었으면 좋겠을 때 사용-->
+    <!--파라미터를 들고 있는 객체를 보내줌 test조건에 해당하지 않으면 빼버림-->
+    <!--뒤쪽에 내용이 있어야지만 WHERE를 넣겠다-->
+    <!--ex. from=0 SELECT * FROM user_follow WHERE to_user_id(AND, OR도 자동으로 빼줌)-->
+</mapper>
