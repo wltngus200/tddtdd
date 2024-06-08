@@ -1,7 +1,9 @@
 package com.green.tddpractice.feed;
 
 import com.green.tddpractice.common.CustomFileUtils;
+import com.green.tddpractice.feed.model.FeedPostPicReq;
 import com.green.tddpractice.feed.model.FeedPostReq;
+import com.green.tddpractice.feed.model.FeedPostRes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,7 @@ class FeedServiceTest {
     private FeedMapper mapper;
     @MockBean
     private CustomFileUtils utils;
+
     @Test
     void postFeed() throws Exception {
         MultipartFile multipartFile1=new MockMultipartFile("pic", "a.jpg", "image/jpg",
@@ -58,6 +61,7 @@ class FeedServiceTest {
         verify(mapper).postFeed(req1);
 
     }
+    //아예 세팅부터 틀린듯 원본 복사해 와도 안 돌아간다 한 번 더 배우고 해보자
 
     @Test
     void getFeed() {
